@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Smart Receipt Generator</title>
 <style>
-  
   body {
     font-family: Arial, sans-serif;
     background: #f2f2f2;
@@ -21,8 +20,8 @@
   }
 
   #storeNameDisplay, #receiptStoreName {
-  text-transform: uppercase;
-}
+    text-transform: uppercase;
+  }
 
   #receiptSection {
     display: none;
@@ -149,37 +148,37 @@
     margin-top: 15px;
   }
   @media print {
-    body * {
-      visibility: hidden;
-    }
-    #receiptPrintArea, #receiptPrintArea * {
-      visibility: visible;
-    }
-    #receiptPrintArea {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      margin: 0;
-      box-shadow: none;
-      border-radius: 0;
-      padding: 0 10px;
-    }
+  body * {
+    visibility: hidden;
   }
-
-    footer {
-  position: relative;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #222;
-  color: white;
-  padding: 10px;
-  text-align: center;
-  font-size: 14px;
-  box-sizing: border-box;
+  #receiptPrintArea, #receiptPrintArea * {
+    visibility: visible;
+  }
+  #receiptPrintArea {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0 10px;
+    display: block !important;   /* <- Ye add karo */
+  }
 }
 
+  footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #222;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
 </style>
 </head>
 <body>
@@ -206,8 +205,8 @@
     <tbody id="itemsTableBody">
       <tr>
         <td><input type="text" class="itemName" placeholder="Item 1" aria-label="Item Name" /></td>
-        <td><input type="number" class="itemQty" min="1" value="1" aria-label="Quantity" /></td>
-        <td><input type="number" class="itemPrice" min="0" step="0.01" value="0" aria-label="Price" /></td>
+        <td><input type="number" class="itemQty" min="0" placeholder="" aria-label="Quantity" /></td>
+        <td><input type="number" class="itemPrice" min="0" step="0.01" placeholder="" aria-label="Price" /></td>
         <td class="itemTotal">0.00</td>
       </tr>
     </tbody>
@@ -225,7 +224,7 @@
 </div>
 
 <!-- Printable Receipt -->
-<div id="receiptPrintArea" aria-label="Printable Receipt">
+<div id="receiptPrintArea" aria-label="Printable Receipt" style="display:none;">
   <h2 id="receiptStoreName"></h2>
   <p id="receiptDate"></p>
   <p id="receiptTime"></p>
@@ -243,15 +242,13 @@
 </div>
 
 <div>
-        <a href="index.html"><button>Back</button></a>
-    </div>
+  <a href="index.html"><button>Back</button></a>
+</div>
 
-<footer >
-    <p>&copy; 2025 -CHAUDHARY SHAD KHAN | Last Updated: <span id="lastUpdated"></span></p>
-    <p>Maintained by: CHAUDHARY SHAD KHAN</p>
-  </footer>
-
-  
+<footer>
+  <p>&copy; 2025 -CHAUDHARY SHAD KHAN | Last Updated: <span id="lastUpdated"></span></p>
+  <p>Maintained by: CHAUDHARY SHAD KHAN</p>
+</footer>
 
 <!-- QRCode.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -259,9 +256,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
-
   const now = new Date();
-    document.getElementById("lastUpdated").textContent = now.toLocaleDateString() + " " + now.toLocaleTimeString();
+  document.getElementById("lastUpdated").textContent = now.toLocaleDateString() + " " + now.toLocaleTimeString();
 
   const storeInputSection = document.getElementById('storeInputSection');
   const receiptSection = document.getElementById('receiptSection');
@@ -292,7 +288,7 @@
       alert('Please enter your store name');
       return;
     }
-    storeNameDisplay.textContent = name;
+    storeNameDisplay.textContent = name.toUpperCase();
     storeInputSection.style.display = 'none';
     receiptSection.style.display = 'block';
     storeNameInput.value = '';
@@ -304,18 +300,19 @@
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><input type="text" class="itemName" placeholder="Item" aria-label="Item Name" /></td>
-      <td><input type="number" class="itemQty" min="1" value="1" aria-label="Quantity" /></td>
-      <td><input type="number" class="itemPrice" min="0" step="0.01" value="0" aria-label="Price" /></td>
+      <td><input type="number" class="itemQty" min="0" placeholder="" aria-label="Quantity" /></td>
+      <td><input type="number" class="itemPrice" min="0" step="0.01" placeholder="" aria-label="Price" /></td>
       <td class="itemTotal">0.00</td>
     `;
     itemsTableBody.appendChild(tr);
     attachListeners(tr);
   });
 
-  // Attach listeners to inputs in row for realtime total calculation
+  // Attach listeners to inputs in row for realtime total calculation and Enter key navigation
   function attachListeners(tr) {
     const qtyInput = tr.querySelector('.itemQty');
     const priceInput = tr.querySelector('.itemPrice');
+    const nameInput = tr.querySelector('.itemName');
     const totalCell = tr.querySelector('.itemTotal');
 
     function recalc() {
@@ -328,6 +325,34 @@
 
     qtyInput.addEventListener('input', recalc);
     priceInput.addEventListener('input', recalc);
+
+    // Handle Enter key to move focus to next input field smartly
+    [nameInput, qtyInput, priceInput].forEach((input, idx, arr) => {
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          // Move to next input in same row, or add new row if last input
+          if (idx < arr.length - 1) {
+            arr[idx + 1].focus();
+          } else {
+            // If last input (price), move to next row's first input or add row
+            const currentRow = input.closest('tr');
+            let nextRow = currentRow.nextElementSibling;
+            if (nextRow) {
+              nextRow.querySelector('.itemName').focus();
+            } else {
+              addItemBtn.click();
+              // Wait a bit for new row to be added then focus
+              setTimeout(() => {
+                const lastRow = itemsTableBody.lastElementChild;
+                lastRow.querySelector('.itemName').focus();
+              }, 50);
+            }
+          }
+        }
+      });
+    });
+
     recalc();
   }
 
@@ -417,8 +442,8 @@
     itemsTableBody.innerHTML = `
       <tr>
         <td><input type="text" class="itemName" placeholder="Item 1" aria-label="Item Name" /></td>
-        <td><input type="number" class="itemQty" min="1" value="1" aria-label="Quantity" /></td>
-        <td><input type="number" class="itemPrice" min="0" step="0.01" value="0" aria-label="Price" /></td>
+        <td><input type="number" class="itemQty" min="0" placeholder="" aria-label="Quantity" /></td>
+        <td><input type="number" class="itemPrice" min="0" step="0.01" placeholder="" aria-label="Price" /></td>
         <td class="itemTotal">0.00</td>
       </tr>
     `;
