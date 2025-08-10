@@ -10,28 +10,7 @@
       margin: 0;
       font-family: Arial, sans-serif;
     }
-
-    body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-
-  /* Remove solid background */
-  /* background-color: white; */
-
-  /* Add animated gradient background */
-  background: linear-gradient(270deg, #ff6f91, #845ec2, #ffc75f, #00b894, #d63031, #0984e3);
-  background-size: 1200% 1200%;
-  animation: gradientBG 20s ease infinite;
-  height: 100vh;
-  color: black; /* Text color readable on bright background */
-}
-
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
+    
 
     /* Heading container flex with wrap */
     .heading {
@@ -86,18 +65,16 @@
     
 
     footer {
-  position: relative;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #222;
-  color: white;
-  padding: 10px;
-  text-align: center;
-  font-size: 14px;
-  box-sizing: border-box;
-}
-
+        position: relative;
+      background-color: #222;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 40px;
+    }
 
     a {
   color: #007bff;
@@ -203,6 +180,7 @@ a:hover::after {
 </head>
 <body>
   <div class="heading">
+    
     <div>
       <img src="Student_Library.png" alt="GBU logo" class="logo" />
     </div>
@@ -211,7 +189,7 @@ a:hover::after {
   </div>
 
   <div class="school_name">
-    We try to provide free easy and good study material.
+    We try to provide free easy and good service.
   </div>
 
   <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();" scrollamount="5" class="scroll">
@@ -226,10 +204,13 @@ a:hover::after {
       <div id="qrcode"></div>
     </div>
   </div> -->
+
+
+  <h1 class="material_box">Material Help<hr /></h1>
   
   <a href="reciept.html" class="button-link">Make A Shop Reciept For Free</a>
 
-  <h3 class="material_box">Material Help<hr /></h3>
+  
 
   <footer>
     <p>&copy; 2025 -CHAUDHARY SHAD KHAN | Last Updated: <span id="lastUpdated"></span></p>
