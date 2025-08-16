@@ -3,249 +3,161 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Student library</title>
+  <title>Student Library</title>
   <style>
-    body {
-      background-color: white;
-      margin: 0;
-      font-family: Arial, sans-serif;
-    }
-    
+    /* Modern Google Font */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-    /* Heading container flex with wrap */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      color: #333;
+    }
+
+    /* Header */
     .heading {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      background-color: white;
-      padding: 10px 5%;
-      box-sizing: border-box;
-      text-align: center;
-      margin: 0;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
     .logo {
-      width: 300px;
-      height: 300px;
-      margin: 5px 0;
-      object-fit: contain;
+      width: 150px;
+      height: auto;
+      margin-right: 20px;
     }
 
     .name {
-      color: black;
-      font-size: 5vw; /* Responsive font size */
-      flex: 1 1 300px;
-      margin: 10px 20px;
-      white-space: nowrap;
+      font-size: clamp(24px, 5vw, 42px);
+      font-weight: 700;
+      color: rgb(142, 43, 84);
+    }
+
+    /* Tagline */
+    .school_name {
+      margin: 20px auto;
+      font-size: clamp(16px, 2vw, 22px);
+      text-align: center;
+      max-width: 700px;
+      color: #444;
+    }
+
+    /* Marquee */
+    marquee.scroll {
+      background: rgb(142, 43, 84);
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 0;
+    }
+
+    /* Section Title */
+    h1.material_box {
+      text-align: center;
+      font-size: 28px;
+      margin: 40px auto 20px;
+      color: rgb(142, 43, 84);
+      position: relative;
+    }
+
+    h1.material_box hr {
+      width: 80px;
+      height: 3px;
+      border: none;
+      margin: 10px auto;
+      background: rgb(142, 43, 84);
+      border-radius: 2px;
+    }
+
+    /* Buttons */
+    a.button-link {
+      display: inline-block;
+      margin: 15px auto;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      border-radius: 8px;
+      background: rgb(142, 43, 84);
+      color: #fff;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    a.button-link:hover {
+      background: #a2285a;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(142, 43, 84, 0.3);
+    }
+
+    /* Footer */
+    footer {
+      background: #222;
+      color: #eee;
+      text-align: center;
+      padding: 20px 10px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    footer span {
+      color: #f8d7da;
       font-weight: bold;
     }
 
-    
-
-   
-
-    .school_name {
-      margin: 20px 5%;
-      font-size: 2vw;
-      text-align: center;
-      box-sizing: border-box;
-    }
-
-    marquee.scroll {
-      background-color: rgb(142, 43, 84);
-      color: white;
-      font-size: 1vw;
-      padding: 10px 20px;
-      width: 100%;
-      box-sizing: border-box;
-      margin: 0;
-    }
-
-    
-
-    footer {
-        position: relative;
-      background-color: #222;
-      color: white;
-      padding: 10px;
-      text-align: center;
-      font-size: 14px;
-      width: 100%;
-      box-sizing: border-box;
-      margin-top: 40px;
-    }
-
-    a {
-  color: #007bff;
-  text-decoration: none;
-  transition: color 0.3s ease, transform 0.3s ease;
-  display: inline-block;
-}
-
-a:hover {
-  color: rgb(142, 43, 84);
-  transform: scale(1.1);
-}
-
-a {
-  color:rgb(142, 43, 84);
-  text-decoration: none;
-  background-image: linear-gradient(currentColor, currentColor);
-  background-position: center bottom;
-  background-repeat: no-repeat;
-  background-size: 0% 2px;
-  transition: background-size 0.3s ease;
-}
-
-a:hover {
-  background-size: 100% 2px;
-}
-
-a.button-link {
-  padding: 8px 15px;
-  background-color:rgb(142, 43, 84);
-  color: white;
-  border-radius: 5px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-  display: inline-block;
-}
-
-a.button-link:hover {
-  background-color: rgb(142, 43, 84);
-  color: #fff;
-}
-
-a {
-  color: rgb(142, 43, 84);
-  text-decoration: none;
-  position: relative;
-  transition: color 0.3s ease;
-}
-
-a::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: rgb(142, 43, 84);
-  transition: width 0.3s ease;
-}
-
-a:hover {
-  color:rgb(142, 43, 84);
-}
-
-a:hover::after {
-  width: 100%;
-}
-
-
-    /* Responsive adjustments */
+    /* Responsive */
     @media (max-width: 768px) {
-      .name {
-        font-size: 7vw;
-        white-space: normal;
-      }
-      .school_name, marquee.scroll {
-        font-size: 3vw;
-      }
-      
       .heading {
-        justify-content: center;
-        gap: 20px;
+        flex-direction: column;
+        text-align: center;
       }
-    }
-
-    @media (max-width: 480px) {
       .logo {
-        width: 150px;
-      height: 150px;
-      }
-      .name {
-        font-size: 10vw;
-        padding: -1000px;
-      }
-      .school_name, marquee.scroll {
-        font-size: 3vw;
-      }
-      .QR_container {
-        max-width: 90%;
+        margin-bottom: 10px;
       }
     }
   </style>
 </head>
 <body>
+  <!-- Header -->
   <div class="heading">
-    
-    <div>
-      <img src="Student_Library.png" alt="GBU logo" class="logo" />
-    </div>
+    <img src="Student_Library.png" alt="GBU logo" class="logo" />
     <div class="name">Student Library</div>
-    
   </div>
 
+  <!-- Tagline -->
   <div class="school_name">
-    We try to provide free easy and good service.
+    We try to provide free, easy and good service.
   </div>
 
+  <!-- Marquee -->
   <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();" scrollamount="5" class="scroll">
-    Welcome to Student Library. We are try to give free service everyone
+    📚 Welcome to Student Library — Free services for everyone 🎓
   </marquee>
 
-  <!-- <div class="QR_body">
-    <div class="QR_container">
-      <h1>Text to QR Code Generator</h1>
-      <textarea id="text-input" placeholder="Yahan apna text likho..." class="QR_textarea"></textarea>
-      <button id="generate-btn" class="QR_button">Generate QR Code</button>
-      <div id="qrcode"></div>
-    </div>
-  </div> -->
-
-
+  <!-- Material Section -->
   <h1 class="material_box">Material Help<hr /></h1>
-  
-  <a href="reciept.html" class="button-link">Make A Shop Reciept For Free</a>
+  <div style="text-align: center;">
+    <a href="reciept.html" class="button-link">🧾 Make A Shop Receipt Free</a>
+  </div>
 
-  
-
+  <!-- Footer -->
   <footer>
-    <p>&copy; 2025 -CHAUDHARY SHAD KHAN | Last Updated: <span id="lastUpdated"></span></p>
+    <p>&copy; 2025 - <b>CHAUDHARY SHAD KHAN</b> | Last Updated: <span id="lastUpdated"></span></p>
     <p>Maintained by: CHAUDHARY SHAD KHAN</p>
   </footer>
 
-  <!-- QRCode.js Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- Script -->
   <script>
     // Date & time display
     const now = new Date();
-    document.getElementById("lastUpdated").textContent = now.toLocaleDateString() + " " + now.toLocaleTimeString();
-
-    // QR code generator
-    const generateBtn = document.getElementById('generate-btn');
-    const textInput = document.getElementById('text-input');
-    const qrcodeContainer = document.getElementById('qrcode');
-    let qrCode;
-
-    generateBtn.addEventListener('click', () => {
-      const text = textInput.value.trim();
-      if (!text) {
-        alert('Please enter some text to generate QR code!');
-        return;
-      }
-      qrcodeContainer.innerHTML = '';
-      qrCode = new QRCode(qrcodeContainer, {
-        text: text,
-        width: 200,
-        height: 200,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
-      });
-    });
+    document.getElementById("lastUpdated").textContent = 
+      now.toLocaleDateString() + " " + now.toLocaleTimeString();
   </script>
 </body>
 </html>
